@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "715691049131",
+    "project_id": "myshoppal-a80dd",
+    "storage_bucket": "myshoppal-a80dd.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:715691049131:android:d99c91cbe193cc891137ee",
+        "android_client_info": {
+          "package_name": "com.example.myshoppal"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoLltRtQue3-xYrYEofnBTcLPbdT60P6Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
