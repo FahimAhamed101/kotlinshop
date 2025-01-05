@@ -36,7 +36,7 @@ class RegisterActivity : BaseActivity() {
 
         binding.tvLogin.setOnClickListener {
             //launch login screen
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
 
         binding.btnRegister.setOnClickListener{
@@ -99,7 +99,7 @@ class RegisterActivity : BaseActivity() {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_black_arrow_back_24)
         }
 
-        binding.toolbarRegisterActivity.setNavigationOnClickListener { onBackPressed() }
+        binding.toolbarRegisterActivity.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
     }
 
     private fun registerUser () {
@@ -132,14 +132,14 @@ class RegisterActivity : BaseActivity() {
 
                             FirestoreClass().registerUser(this@RegisterActivity,user)
 
-                            /*showErrorSnackBar(
+                            showErrorSnackBar(
                                 "You are successfully registered. Your user id is ${firebaseUser.uid}",
                                 false
-                            )*/
+                            )
 
-                            //log out and close screen
+                           /* //log out and close screen
                             FirebaseAuth.getInstance().signOut()
-                            finish()
+                            finish()*/
 
                         }else{
                             hideProgressDialog()

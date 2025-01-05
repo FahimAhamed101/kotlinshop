@@ -1,5 +1,4 @@
 package com.example.myshoppal.firestore
-
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
@@ -13,7 +12,8 @@ import com.example.myshoppal.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class FirestoreClass {
 
@@ -51,5 +51,10 @@ class FirestoreClass {
         return currentUserID
     }
 
-}
 
+
+
+
+    //get list of product sold of specific user
+
+}
