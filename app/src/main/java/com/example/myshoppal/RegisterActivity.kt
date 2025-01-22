@@ -10,8 +10,10 @@ import com.example.myshoppal.firestore.FirestoreClass
 import com.example.myshoppal.models.User
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
+
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.FirebaseAuth
+
 
 class RegisterActivity : BaseActivity() {
     lateinit var binding: ActivityRegisterBinding
@@ -137,9 +139,9 @@ class RegisterActivity : BaseActivity() {
                                 false
                             )
 
-                           /* //log out and close screen
-                            FirebaseAuth.getInstance().signOut()
-                            finish()*/
+                            /* //log out and close screen
+                             FirebaseAuth.getInstance().signOut()
+                             finish()*/
 
                         }else{
                             hideProgressDialog()

@@ -18,13 +18,13 @@ object Constants {
     const val LOGGED_IN_USERNAME: String = "logged_in_username"
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
     const val READ_STORAGE_PERMISSION_CODE = 2
-    const val PICK_IMAGE_REQUEST_CODE = 1
+
     const val FIRST_NAME: String = "firstName"
     const val LAST_NAME: String = "lastName"
     const val PRODUCTS: String = "Products"
     const val MALE: String = "male"
     const val FEMALE: String = "female"
-
+    const val PICK_IMAGE_REQUEST_CODE = 1
     const val MOBILE: String = "mobile"
     const val GENDER: String = "gender"
     const val IMAGE: String = "image"
@@ -68,6 +68,21 @@ object Constants {
     const val EXTRA_SOLD_DETAILS: String = "extra_sold_product_details"
 
 
+    fun showImageChooser(launcher: ActivityResultLauncher<Intent>) {
+        //intent to launch image selection of phone storage
+        val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        //launch image selection of phone via constant code
+        //activity.startActivityForResult(galleryIntent, PICK_IMAGE_REQUEST_CODE)
+        launcher.launch(galleryIntent)
+    }
 
+    fun getFileExtension(activity: Activity, uri: Uri?): String?{
+        /*MimeTypeMap: two-way map that maps MIME-types to files extension and vice-versa
+        getSingleton: get singleton instance of MimeTypeMap
+        getExtensionFromMimeType: return the registered extension for the given MIME type
+        contentResolver.getType: return MIME type of the given content URL
+         */
+        return MimeTypeMap.getSingleton().getExtensionFromMimeType(activity.contentResolver.getType(uri!!))
+    }
 
 }

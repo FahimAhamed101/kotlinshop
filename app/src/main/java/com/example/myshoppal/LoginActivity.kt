@@ -16,7 +16,6 @@ import com.example.myshoppal.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 
 
-
 class LoginActivity : BaseActivity(), View.OnClickListener {
     lateinit var binding: ActivityLoginBinding
 
@@ -69,7 +68,17 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             val email = binding.etEmail.text.toString().trim{it <= ' '}
             val password = binding.etPassword.text.toString().trim{it <= ' '}
 
+            //log in using FirebaseAuth
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener { task ->
 
+                    if (task.isSuccessful) {
+                        FirestoreClass().getUserDetails(this@LoginActivity)
+                    }else {
+                        hideProgressDialog()
+                        showErrorSnackBar(task.exception!!.message.toString(),true)
+                    }
+                }
         }
     }
 
@@ -78,7 +87,10 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         //if view is not null, check his id and do as instructed in the lambda
         if (v != null) {
             when (v.id) {
-
+                R.id.tv_forgot_password -> {
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    startActivity(intent)
+                }
 
                 R.id.btn_login -> {
                     LogInRegisteredUser()
@@ -101,9 +113,15 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         Log.i("last name: ", user.lastName)
         Log.i("Email: ", user.email)*/
 
+        if (user.profileCompleted ==0){
+            //if profile incomplete, launch UserProfileActivity
+            val intent = Intent(this@LoginActivity, UserProfileActivity::class.java)
+            intent.putExtra(Constants.EXTRA_USER_DETAILS, user)
+            startActivity(intent)
+        } else {
             //redirect user to main screen after log in
-        startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+        }
         finish()
     }
 }

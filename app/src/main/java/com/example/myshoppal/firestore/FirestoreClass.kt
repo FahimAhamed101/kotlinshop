@@ -51,7 +51,52 @@ class FirestoreClass {
         return currentUserID
     }
 
+    fun getUserDetails(activity: Activity){
+        //we pass name of collection we want data from
+        mFirestore.collection(Constants.USERS)
+            //we go to the documents of currentuserID
+            .document(getCurrentUserID())
+            //get try to get something (the doc)
+            .get()
+            //once we get it, we do something
+            .addOnSuccessListener { document ->
+                Log.i(activity.javaClass.simpleName, document.toString())
 
+                //once we retrieved the document and its field, we convert it into a User model
+                val user = document.toObject(User::class.java)!!
+
+                val sharedPreferences = activity.getSharedPreferences(
+                    Constants.MYSHOPPAL_PREFERENCES,
+                    Context.MODE_PRIVATE
+                )
+
+                val editor: SharedPreferences.Editor = sharedPreferences.edit()
+                editor.putString(
+                    Constants.LOGGED_IN_USERNAME,
+                    "${user.firstName} ${user.lastName}"
+                )
+                editor.apply()
+
+                //here we define what to do with the val user depending on the activity we are in
+                when (activity){
+                    is LoginActivity -> {
+                        //activity.hideProgressDialog()
+                        activity.userLoggedInSuccess(user)
+                    }
+
+                }
+            }
+            .addOnFailureListener { e->
+                //hide progress dialog if there is error and print inn log
+                when (activity) {
+                    is LoginActivity -> {
+                        activity.hideProgressDialog()
+                    }
+
+                }
+                Log.e(activity.javaClass.simpleName, "Error while getting user details",e)
+            }
+    }
 
 
 
