@@ -98,6 +98,69 @@ class FirestoreClass {
             }
     }
 
+    //update user profile with new data
+    fun updateUserProfileData(activity: Activity, userHashMap: HashMap<String, Any>){
+
+        mFirestore.collection(Constants.USERS)
+            //access the document with the same userID we are passing
+            .document(getCurrentUserID())
+            //update document with prepared hashmap (key+value)
+            .update(userHashMap)
+            //call userProfileUpdateSuccess if successfull (toast, back to dashboard, hide progress)
+            .addOnSuccessListener {
+                when (activity){
+                    is UserProfileActivity -> {
+                        activity.userProfileUpdateSuccess()
+                    }
+                }
+            }
+            //log error
+            .addOnFailureListener { e->
+                when (activity){
+                    is UserProfileActivity -> {
+                        //hide progress dialog if there is error and print it in log
+                        activity.hideProgressDialog()
+                    }
+                }
+                Log.e(activity.javaClass.simpleName,"error while updating details", e)
+            }
+    }
+
+    fun uploadImageToCloudStorage(activity: Activity, imageFileUri: Uri?, imageType: String){
+        //sRef is just the name of the file on the cloud: user image+time+file ext
+        val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
+            imageType + System.currentTimeMillis() + "."
+                    + Constants.getFileExtension(activity,imageFileUri)
+        )
+        //now we put it online with the put method
+        sRef.putFile(imageFileUri!!).addOnSuccessListener { taskSnapshot ->
+            //log the URL
+            Log.e("Firebase image URL",taskSnapshot.metadata!!.reference!!.downloadUrl.toString())
+
+            //get the downloadable Uri and pass it to imageUploadSuccess
+            taskSnapshot.metadata!!.reference!!.downloadUrl.addOnSuccessListener { uri ->
+                Log.e("Downloadable image URl", uri.toString())
+                when(activity){
+                    is UserProfileActivity -> {
+                        activity.imageUploadSuccess(uri.toString())
+                    }
+
+                }
+            }
+        }
+
+            .addOnFailureListener { exception ->
+                //hide progressdialog and print in log
+                when(activity){
+                    is UserProfileActivity -> {
+                        activity.hideProgressDialog()
+                    }
+
+                }
+
+                Log.e(activity.javaClass.simpleName,exception.message,exception)
+            }
+    }
 
 
     //get list of product sold of specific user

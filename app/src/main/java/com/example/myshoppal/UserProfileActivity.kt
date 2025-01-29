@@ -1,5 +1,4 @@
 package com.example.myshoppal
-
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -80,7 +79,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
             actionBar.setHomeAsUpIndicator(R.drawable.ic_black_arrow_back_24)
         }
 
-        binding.toolbarUserProfileActivity.setNavigationOnClickListener {onBackPressedDispatcher.onBackPressed() }
+        binding.toolbarUserProfileActivity.setNavigationOnClickListener { onBackPressed() }
     }
 
     override fun onClick(v: View?) {
@@ -105,9 +104,21 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                 }
 
                 R.id.btn_submit -> {
+                    if (validateUserProfileDetails()) {
+                        showProgressDialog(resources.getString(R.string.please_wait))
 
 
+                        if (mSelectedImageUri != null)
+                            FirestoreClass().uploadImageToCloudStorage(
+                                this,
+                                mSelectedImageUri,
+                                Constants.USER_PROFILE_IMAGE
+                            )
+                        //showErrorSnackBar("Your details are valid. You can update them", false)
 
+                    } else {
+                        updateUserProfileDetails()
+                    }
                 }
             }
         }
@@ -165,7 +176,7 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
         //showProgressDialog(resources.getString(R.string.please_wait))
 
         //update user profile data by sending all the hashmap
-
+        FirestoreClass().updateUserProfileData(this, userHashMap)
     }
 
     override fun onRequestPermissionsResult(
