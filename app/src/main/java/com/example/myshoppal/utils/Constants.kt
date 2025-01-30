@@ -9,22 +9,22 @@ import androidx.activity.result.ActivityResultLauncher
 
 import java.io.IOException
 
-object Constants {
+ object Constants {
     //collections in firestore
     const val USERS: String = "users"
-
+    const val PRODUCTS: String = "Products"
 
     const val MYSHOPPAL_PREFERENCES: String = "MyShopPalPrefs"
     const val LOGGED_IN_USERNAME: String = "logged_in_username"
     const val EXTRA_USER_DETAILS: String = "extra_user_details"
     const val READ_STORAGE_PERMISSION_CODE = 2
-
+    const val PICK_IMAGE_REQUEST_CODE = 1
     const val FIRST_NAME: String = "firstName"
     const val LAST_NAME: String = "lastName"
-    const val PRODUCTS: String = "Products"
+
     const val MALE: String = "male"
     const val FEMALE: String = "female"
-    const val PICK_IMAGE_REQUEST_CODE = 1
+
     const val MOBILE: String = "mobile"
     const val GENDER: String = "gender"
     const val IMAGE: String = "image"
@@ -66,7 +66,6 @@ object Constants {
     const val SOLD_PRODUCTS: String = "sold_products"
 
     const val EXTRA_SOLD_DETAILS: String = "extra_sold_product_details"
-
 
     fun showImageChooser(launcher: ActivityResultLauncher<Intent>) {
         //intent to launch image selection of phone storage

@@ -120,7 +120,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             startActivity(intent)
         } else {
             //redirect user to main screen after log in
-            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            startActivity(Intent(this@LoginActivity, AddProductActivity::class.java))
         }
         finish()
     }
