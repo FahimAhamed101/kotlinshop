@@ -29,7 +29,7 @@ class SplashActivity : AppCompatActivity() {
         }
         //Used to change activity, find better solution
         Handler().postDelayed({//call Handler-Looper to change activity with a 1sec delay
-            startActivity(Intent(this@SplashActivity, LoginActivity::class.java))
+            startActivity(Intent(this@SplashActivity, DashboardActivity::class.java))
             finish()
         },2000)
 

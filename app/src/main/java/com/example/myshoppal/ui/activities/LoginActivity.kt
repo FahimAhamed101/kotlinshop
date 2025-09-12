@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
-import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -14,7 +13,6 @@ import com.example.myshoppal.firestore.FirestoreClass
 import com.example.myshoppal.models.User
 import com.example.myshoppal.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
-
 
 class LoginActivity : BaseActivity(), View.OnClickListener {
     lateinit var binding: ActivityLoginBinding
@@ -87,10 +85,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
         //if view is not null, check his id and do as instructed in the lambda
         if (v != null) {
             when (v.id) {
-                R.id.tv_forgot_password -> {
-                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                    startActivity(intent)
-                }
+
 
                 R.id.btn_login -> {
                     LogInRegisteredUser()
@@ -120,7 +115,7 @@ class LoginActivity : BaseActivity(), View.OnClickListener {
             startActivity(intent)
         } else {
             //redirect user to main screen after log in
-            startActivity(Intent(this@LoginActivity, AddProductActivity::class.java))
+            startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
         }
         finish()
     }

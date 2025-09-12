@@ -1,4 +1,5 @@
 package com.example.myshoppal.firestore
+
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
@@ -7,7 +8,10 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import com.example.myshoppal.models.*
 import com.example.myshoppal.ui.activities.*
+import com.example.myshoppal.ui.fragments.DashboardFragment
 
+import com.example.myshoppal.ui.fragments.ProductsFragment
+import com.example.myshoppal.ui.fragments.SoldProductsFragment
 import com.example.myshoppal.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -194,4 +198,55 @@ class FirestoreClass {
             }
     }
 
+
+
+
+
+
+
+    //get all product from all users
+    fun getDashboardItemsList(fragment: DashboardFragment) {
+        //we pass name of collection we want data from
+        mFirestore.collection(Constants.PRODUCTS)
+            //get the fields of the doc
+            .get()
+            //if successful
+            .addOnSuccessListener { document ->
+                //create log with the list of product
+                Log.e("products list", document.documents.toString())
+                //will store the products in a array list
+                val productsList: ArrayList<Product> = ArrayList()
+
+                //loop through all the fields while assigning them in a proper Product object,
+                //add id of document to product_id, and add the product to the array list
+                for (i in document.documents) {
+                    val product = i.toObject(Product::class.java)
+                    product!!.product_id = i.id
+                    productsList.add(product)
+                }
+
+                //pass the arraylist we populated to successDashboardItemsList
+                fragment.successDashboardItemsList(productsList)
+            }
+            //if failed,
+            .addOnFailureListener {
+                //hide progressdialog and log error
+                fragment.hideProgressDialog()
+                Log.e(fragment.javaClass.simpleName, "error while getting dashboard items list")
+            }
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+    //get list of product sold of specific user
+

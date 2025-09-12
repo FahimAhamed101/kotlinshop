@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -21,11 +22,10 @@ import com.example.myshoppal.utils.Constants
 import com.example.myshoppal.utils.GlideLoader
 import java.io.IOException
 
-
 class AddProductActivity : BaseActivity(), View.OnClickListener {
     private lateinit var binding: ActivityAddProductBinding
     private var mSelectedImageUri: Uri? = null //uri is address on local device
-    private var mUserProductImageUrl: String ="" //url is address in cloud storage
+    private var mUserProductImageUrl: String = "" //url is address in cloud storage
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,6 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
 
     //can go back by pressing black arrow
     private fun setupActionBar() {
-
         setSupportActionBar(binding.toolbarAddProductActivity)
         val actionBar = supportActionBar
         if (actionBar != null) {
@@ -60,35 +59,60 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                 //if we click the small photo icon, check if it has permission to read storage,
                 //and call the function that lets you choose the image in gallery
                 R.id.iv_add_update_product -> {
-                    if (ContextCompat.checkSelfPermission(
-                            this,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                        )
-                        == PackageManager.PERMISSION_GRANTED
-                    ) {
+                    if (checkStoragePermission()) {
                         Constants.showImageChooser(pickImage)
-                        //else, ask for permission
                     } else {
-                        ActivityCompat.requestPermissions(
-                            this,
-                            arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                            Constants.READ_STORAGE_PERMISSION_CODE
-                        )
+                        requestStoragePermission()
                     }
                 }
 
-                //if none of the fields are empty, show snackbar and send to cloud
-                R.id.btn_submit ->{
-                    if (validateProductDetails()){
+                //if none of the fields are empty, show progress and upload to cloud
+                R.id.btn_submit -> {
+                    if (validateProductDetails()) {
                         uploadProductImage()
-                        showErrorSnackBar("your product exist", false)
                     }
                 }
             }
         }
     }
 
-    //is called when a request fpr permission is asked, will execute code depending on the permission asked
+    // Check storage permission based on Android version
+    private fun checkStoragePermission(): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13+ (API 33+)
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_MEDIA_IMAGES
+            ) == PackageManager.PERMISSION_GRANTED
+        } else {
+            // Android 12 and below
+            ContextCompat.checkSelfPermission(
+                this,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+    // Request storage permission based on Android version
+    private fun requestStoragePermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            // Android 13+ (API 33+)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_MEDIA_IMAGES),
+                Constants.READ_STORAGE_PERMISSION_CODE
+            )
+        } else {
+            // Android 12 and below
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                Constants.READ_STORAGE_PERMISSION_CODE
+            )
+        }
+    }
+
+    //is called when a request for permission is asked, will execute code depending on the permission asked
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<out String>,
@@ -96,20 +120,18 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
-            //Toast to show its granted
+            //Check if permission granted
             if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //showErrorSnackBar("the storage permission is granted", false)
                 Constants.showImageChooser(pickImage)
             } else {
                 Toast.makeText(
-                    this, resources.getString(R.string.read_storage_permission_denied),
+                    this,
+                    resources.getString(R.string.read_storage_permission_denied),
                     Toast.LENGTH_SHORT
-                )
-                    .show()
+                ).show()
             }
         }
     }
-
 
     //this val is used for the onRequestPermissionsResult, it pick image from gallery and set it as thumbnail
     private val pickImage =
@@ -123,7 +145,7 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                             R.drawable.ic_vector_edit
                         )
                     )
-                    //load image with glider
+                    //load image with glide
                     try {
                         //we save uri of selected image
                         mSelectedImageUri = result.data!!.data!!
@@ -138,60 +160,55 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
                             this,
                             resources.getString(R.string.image_selection_failed),
                             Toast.LENGTH_SHORT
-                        )
-                            .show()
+                        ).show()
                     }
                 }
             }
         }
 
-
     //check that none of the fields are empty
-    private fun validateProductDetails(): Boolean{
+    private fun validateProductDetails(): Boolean {
         return when {
-            mSelectedImageUri== null -> {
+            mSelectedImageUri == null -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_select_product_image), true)
                 false
             }
 
-            TextUtils.isEmpty(binding.etProductTitle.text.toString().trim{it <= ' '}) -> {
+            TextUtils.isEmpty(binding.etProductTitle.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_title), true)
                 false
             }
 
-            TextUtils.isEmpty(binding.etProductPrice.text.toString().trim{it <= ' '}) -> {
+            TextUtils.isEmpty(binding.etProductPrice.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_price), true)
                 false
             }
 
-            TextUtils.isEmpty(binding.etProductDescription.text.toString().trim{it <= ' '}) -> {
+            TextUtils.isEmpty(binding.etProductDescription.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_description), true)
                 false
             }
 
-            TextUtils.isEmpty(binding.etProductQuantity.text.toString().trim{it <= ' '}) -> {
+            TextUtils.isEmpty(binding.etProductQuantity.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_quantity), true)
                 false
             }
+
             else -> {
                 true
             }
         }
-
     }
 
-    private fun uploadProductImage(){
+    private fun uploadProductImage() {
         showProgressDialog(resources.getString(R.string.please_wait))
         FirestoreClass().uploadImageToCloudStorage(this, mSelectedImageUri, Constants.PRODUCT_IMAGE)
     }
 
     //Once image URL is obtained, pass it to this function, store it as global var,
     //and launch the uploadProductDetails
-    fun imageUploadSuccess(imageUrl:String) {
-        //hideProgressDialog()
-        //showErrorSnackBar("product is uploaded successfully image URL $imageUrl", false)
+    fun imageUploadSuccess(imageUrl: String) {
         mUserProductImageUrl = imageUrl
-
         uploadProductDetails()
     }
 
@@ -199,8 +216,8 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
     private fun uploadProductDetails() {
         //get username from constant MYSHOPPAL_PREFERENCES
         val username = this.getSharedPreferences(
-            Constants.MYSHOPPAL_PREFERENCES, Context.MODE_PRIVATE)
-            .getString(Constants.LOGGED_IN_USERNAME,"")!!
+            Constants.MYSHOPPAL_PREFERENCES, Context.MODE_PRIVATE
+        ).getString(Constants.LOGGED_IN_USERNAME, "")!!
 
         val product = Product(
             FirestoreClass().getCurrentUserID(),
@@ -219,7 +236,8 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
     fun productUploadSuccess() {
         hideProgressDialog()
         Toast.makeText(
-            this@AddProductActivity, "product uploaded",
+            this@AddProductActivity,
+            "Product uploaded successfully!",
             Toast.LENGTH_SHORT
         ).show()
         finish()
