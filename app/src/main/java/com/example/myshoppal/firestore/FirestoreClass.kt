@@ -235,7 +235,68 @@ class FirestoreClass {
                 Log.e(fragment.javaClass.simpleName, "error while getting dashboard items list")
             }
     }
+    //get product list from specific user
+    fun getProductsList(fragment: Fragment) {
+        //we pass name of collection we want data from
+        mFirestore.collection(Constants.PRODUCTS)
+            //access the document which has the field USER_ID with the corresponding user ID
+            .whereEqualTo(Constants.USER_ID,getCurrentUserID())
+            //get the fields of the doc
+            .get()
+            .addOnSuccessListener { document ->
+                //create log with the list of product
+                Log.e("products list", document.documents.toString())
 
+                //will store the products in a array list
+                val productsList: ArrayList<Product> = ArrayList()
+
+                //loop through all the fields while assigning them in a proper Product object,
+                //add id of document to product_id, and add the product to the array list
+                for (i in document.documents) {
+                    val product = i.toObject(Product::class.java)
+                    product!!.product_id = i.id
+                    productsList.add(product)
+                }
+
+                //pass the product list to specific function of specific fragment
+                when(fragment){
+                    //when fragment = ProductsFragment, pass the arrayList to function successPro...
+                    is ProductsFragment ->{
+                        fragment.successProductsListFromFirestore(productsList)
+                    }
+
+                }
+            }
+    }
+
+    //get product list from everyone
+    fun getAllProductsList(activity: Activity){
+        //we pass name of collection we want data from
+        mFirestore.collection(Constants.PRODUCTS)
+            //get the fields of the doc
+            .get()
+            .addOnSuccessListener { document ->
+                //create log with the list of product
+                Log.e("products list", document.documents.toString())
+                //will store the products in a array list
+                val productsList: ArrayList<Product> = ArrayList()
+
+                //loop through all the fields while assigning them in a proper Product object,
+                //add id of document to product_id, and add the product to the array list
+                for (i in document.documents) {
+                    val product = i.toObject(Product::class.java)
+                    product!!.product_id = i.id
+                    productsList.add(product)
+                }
+
+
+
+            }
+            .addOnFailureListener {
+
+
+            }
+    }
 }
 
 
