@@ -95,7 +95,7 @@ class ProductsFragment : BaseFragment(), MenuProvider {
         //if yes, show progressDialog, call deleteProduct from Firestore, and dismiss
         builder.setPositiveButton(resources.getString(R.string.yes)){ dialogInterface, _ ->
             showProgressDialog(resources.getString(R.string.please_wait))
-           // FirestoreClass().deleteProduct(this, productID)
+            FirestoreClass().deleteProduct(this, productID)
             dialogInterface.dismiss()
         }
 

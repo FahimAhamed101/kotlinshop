@@ -14,15 +14,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.MaterialComponents.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
 
-    <style name="Theme.MyShopPal.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
 
     <style name="Theme.MyShopPal.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

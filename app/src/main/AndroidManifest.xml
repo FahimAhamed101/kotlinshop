@@ -3,13 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
     <!-- Internet permission for Firebase -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <!-- Storage permissions for image selection -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- Storage permissions for image selection -->
     <!-- For Android 12 and below -->
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
-    <!-- For Android 13+ (API 33+) -->
+        android:maxSdkVersion="32" /> <!-- For Android 13+ (API 33+) -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 
     <application
@@ -22,10 +20,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyShopPal">
         <activity
+            android:name=".ui.activities.CartListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.ProductDetailsActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.DashboardActivity"
             android:exported="false"
-
-            android:theme="@style/Theme.MyShopPal"/>
+            android:theme="@style/Theme.MyShopPal" />
         <activity
             android:name=".ui.activities.AddProductActivity"
             android:exported="false" />
@@ -47,6 +51,7 @@
             android:theme="@style/Theme.MaterialComponents.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -54,4 +59,5 @@
             android:name=".ui.activities.MainActivity"
             android:exported="false" />
     </application>
+
 </manifest>

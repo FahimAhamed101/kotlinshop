@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myshoppal.R
 import com.example.myshoppal.databinding.ItemListLayoutBinding
 import com.example.myshoppal.models.Product
-
+import com.example.myshoppal.ui.activities.ProductDetailsActivity
 import com.example.myshoppal.ui.fragments.ProductsFragment
 import com.example.myshoppal.utils.Constants
 import com.example.myshoppal.utils.GlideLoader
@@ -53,7 +53,14 @@ open class MyProductsListAdapter(
                 fragment.deleteProduct(model.product_id)
             }
 
-
+            //set oncliclistener for each item in the view
+            holder.itemView.setOnClickListener{
+                //move to ProductDetailsActivity with product id
+                val intent = Intent(context, ProductDetailsActivity::class.java)
+                intent.putExtra(Constants.EXTRA_PRODUCT_ID, model.product_id)
+                intent.putExtra(Constants.EXTRA_PRODUCT_OWNER_ID, model.user_id)
+                context.startActivity(intent)
+            }
         }
 
     }
