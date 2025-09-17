@@ -69,7 +69,7 @@ class FirestoreClass {
 
                 //once we retrieved the document and its field, we convert it into a User model
                 val user = document.toObject(User::class.java)!!
-
+                print(user)
                 val sharedPreferences = activity.getSharedPreferences(
                     Constants.MYSHOPPAL_PREFERENCES,
                     Context.MODE_PRIVATE
