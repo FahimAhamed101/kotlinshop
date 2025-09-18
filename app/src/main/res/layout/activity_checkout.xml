@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorOffWhite"
+    tools:context=".ui.activities.CheckoutActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_checkout_activity"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/app_gradient_color_background">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingStart="@dimen/toolbar_title_padding_start"
+            android:paddingEnd="0dp"
+            android:text="@string/title_checkout"
+            android:textColor="@color/white"
+            android:textSize="@dimen/toolbar_title_text_size"
+            android:textStyle="bold" />
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none"
+        android:layout_below="@+id/toolbar_checkout_activity"
+        android:layout_above="@+id/ll_checkout_place_order">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.MaterialComponents.DayNight">
+
+            <com.example.myshoppal.utils.MSPTextView
+                android:id="@+id/tv_product_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/checkout_content_paddingStartEnd"
+                android:paddingTop="@dimen/checkout_content_paddingTopBottom"
+                android:paddingEnd="@dimen/checkout_content_paddingStartEnd"
+                android:paddingBottom="@dimen/checkout_content_paddingTopBottom"
+                android:text="@string/checkout_lbl_product_items"
+                android:textColor="@color/colorSecondaryText"
+                android:textSize="@dimen/checkout_lbl_textSize"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_cart_list_items"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_product_items"/>
+
+            <com.example.myshoppal.utils.MSPTextView
+                android:id="@+id/tv_selected_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rv_cart_list_items"
+                android:layout_marginStart="@dimen/checkout_content_marginStartEnd"
+                android:layout_marginTop="@dimen/checkout_content_paddingTopBottom"
+                android:layout_marginEnd="@dimen/checkout_content_marginStartEnd"
+                android:layout_marginBottom="@dimen/checkout_content_marginTopBottom"
+                android:textColor="@color/item_value_text_color"
+                android:textSize="@dimen/address_details_textSize"
+                tools:text="XYZ"/>
+
+            <LinearLayout
+                android:id="@+id/ll_checkout_address_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_selected_address"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/checkout_content_marginStartEnd"
+                android:layout_marginTop="@dimen/checkout_content_paddingTopBottom"
+                android:layout_marginEnd="@dimen/checkout_content_marginStartEnd"
+                android:layout_marginBottom="@dimen/checkout_content_marginTopBottom">
+
+                <com.example.myshoppal.utils.MSPTextView
+                    android:id="@+id/tv_checkout_address_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/checkout_content_paddingStartEnd"
+                    android:paddingTop="@dimen/checkout_content_paddingTopBottom"
+                    android:paddingEnd="@dimen/checkout_content_paddingStartEnd"
+                    android:paddingBottom="@dimen/checkout_content_paddingTopBottom"
+                    android:text="@string/lbl_home"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/checkout_lbl_textSize"/>
+
+                <com.example.myshoppal.utils.MSPTextView
+                    android:id="@+id/tv_checkout_full_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/checkout_content_paddingStartEnd"
+                    android:paddingTop="@dimen/checkout_content_paddingTopBottom"
+                    android:paddingEnd="@dimen/checkout_content_paddingStartEnd"
+                    android:paddingBottom="@dimen/checkout_content_paddingTopBottom"
+                    tools:text="jo Mouda"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/checkout_lbl_textSize"/>
+
+                <com.example.myshoppal.utils.MSPTextView
+                    android:id="@+id/tv_checkout_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/checkout_content_paddingStartEnd"
+                    android:paddingTop="@dimen/checkout_content_paddingTopBottom"
+                    android:paddingEnd="@dimen/checkout_content_paddingStartEnd"
+                    android:paddingBottom="@dimen/checkout_content_paddingTopBottom"
+                    android:textColor="@color/colorSecondaryText"
+                    android:textSize="@dimen/checkout_lbl_textSize"
+                    tools:text="XYZ"/>
+
+                <com.example.myshoppal.utils.MSPTextView
+                    android:id="@+id/tv_checkout_additional_note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/checkout_content_paddingTopBottom"
+                    android:textColor="@color/item_value_text_color"
+                    android:textSize="@dimen/address_details_textSize"
+                    tools:text="XYZ"/>
+
+                <com.example.myshoppal.utils.MSPTextView
+                    android:id="@+id/tv_checkout_other_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/checkout_content_paddingTopBottom"
+                    android:textColor="@color/item_value_text_color"
+                    android:textSize="@dimen/address_details_textSize"
+                    tools:text="XYZ"/>
+
+                <com.example.myshoppal.utils.MSPTextView
+                    android:id="@+id/tv_mobile_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/address_details_marginTop"
+                    android:textColor="@color/item_value_text_color"
+                    android:textSize="@dimen/address_details_textSize"
+                    tools:text="0123456"/>
+            </LinearLayout>
+
+            <com.example.myshoppal.utils.MSPTextView
+                android:id="@+id/tv_items_receipt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ll_checkout_address_details"
+                android:layout_marginTop="@dimen/address_details_marginTop"
+                android:textColor="@color/item_value_text_color"
+                android:textSize="@dimen/address_details_textSize"
+                tools:text="100$"/>
+
+            <LinearLayout
+                android:id="@+id/ll_checkout_price_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_items_receipt"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.example.myshoppal.utils.MSPTextView
+                        android:id="@+id/tv_subtotal"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/lbl_subtotal"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/checkout_label_value_textSize"/>
+
+                    <com.example.myshoppal.utils.MSPTextViewBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/checkout_label_value_textSize"
+                        tools:text="100$"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.example.myshoppal.utils.MSPTextView
+                        android:id="@+id/tv_shippin_charge"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/lbl_shipping_charge"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/checkout_label_value_textSize"/>
+
+                    <com.example.myshoppal.utils.MSPTextViewBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/checkout_label_value_textSize"
+                        tools:text="10$"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.example.myshoppal.utils.MSPTextViewBold
+                        android:id="@+id/tv_total"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/lbl_total_amount"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/checkout_label_value_textSize"/>
+
+                    <com.example.myshoppal.utils.MSPTextViewBold
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/checkout_label_value_textSize"
+                        tools:text="110$"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.example.myshoppal.utils.MSPTextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/lbl_payment_mode"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/checkout_label_value_textSize"/>
+
+                    <com.example.myshoppal.utils.MSPTextViewBold
+                        android:id="@+id/tv_payment_method"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:textColor="@color/colorSecondaryText"
+                        android:textSize="@dimen/checkout_label_value_textSize"
+                        android:text="Cash On Delivery"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_checkout_place_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:padding="@dimen/ll_checkout_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <com.example.myshoppal.utils.MSPButton
+                android:id="@+id/btn_place_order"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_background"
+                android:foreground="?selectableItemBackground"
+                android:gravity="center"
+                android:paddingTop="@dimen/btn_padding"
+                android:paddingBottom="@dimen/btn_padding"
+                android:text="@string/btn_lbl_place_order"
+                android:textColor="@color/white"
+                android:textSize="@dimen/btn_textSize"
+                android:visibility="visible"
+                tools:visibility="visible" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

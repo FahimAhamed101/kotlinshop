@@ -11,7 +11,7 @@ import com.example.myshoppal.databinding.ItemAddressLayoutBinding
 import com.example.myshoppal.databinding.ItemCartLayoutBinding
 import com.example.myshoppal.models.Address
 import com.example.myshoppal.ui.activities.AddEditAddressActivity
-
+import com.example.myshoppal.ui.activities.CheckoutActivity
 import com.example.myshoppal.utils.Constants
 
 class AddressListAdapter(
@@ -44,7 +44,17 @@ class AddressListAdapter(
             holder.binding.tvAddressMobileNumber.text = model.mobileNumber
 
             //show address selected in a toast
-
+            if (selectAddress){
+                holder.itemView.setOnClickListener{
+                    /*Toast.makeText(
+                        context, "Selected address: ${model.address}, ${model.zipcode}",
+                                Toast.LENGTH_SHORT
+                    ).show()*/
+                    val intent = Intent(context, CheckoutActivity::class.java)
+                    intent.putExtra(Constants.EXTRA_SELECTED_ADDRESS, model)
+                    context.startActivity(intent)
+                }
+            }
         }
     }
 
