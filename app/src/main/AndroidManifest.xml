@@ -20,13 +20,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyShopPal">
         <activity
-            android:name=".ui.activities.SettingsActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".ui.activities.AddEditAddressActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activities.CartListActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".ui.activities.AddressListActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.activities.SettingsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".ui.activities.CartListActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ui.activities.ProductDetailsActivity"
             android:exported="false"
