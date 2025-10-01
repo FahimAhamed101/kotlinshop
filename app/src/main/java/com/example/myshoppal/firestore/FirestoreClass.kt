@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.myshoppal.models.*
 import com.example.myshoppal.ui.activities.*
 import com.example.myshoppal.ui.fragments.DashboardFragment
+import com.example.myshoppal.ui.fragments.OrdersFragment
 import com.example.myshoppal.ui.fragments.ProductsFragment
 import com.example.myshoppal.ui.fragments.SoldProductsFragment
 import com.example.myshoppal.utils.Constants
@@ -618,7 +619,39 @@ class FirestoreClass {
                 )
             }
     }
+    //get list of order of specific user
+    fun getMyOrdersList(fragment: OrdersFragment){
+        //we pass name of collection we want data from
+        mFirestore.collection(Constants.ORDERS)
+            //access the document which has the field USER_ID with the corresponding user ID
+            .whereEqualTo(Constants.USER_ID,getCurrentUserID())
+            //get the fields of the doc
+            .get()
+            //if successful
+            .addOnSuccessListener { document ->
+                //create log with the list of product
+                Log.e("orders list", document.documents.toString())
+                //will store the products in a array list
+                val orderList: ArrayList<Order> = ArrayList()
 
+                //loop through all the fields while assigning them in a proper Order object,
+                //add id of document to orderItem, and add the orderItem to the array list
+                for (i in document.documents) {
+                    val orderItem = i.toObject(Order::class.java)
+                    orderItem!!.id = i.id
+                    orderList.add(orderItem)
+                }
+
+                //pass the arraylist to fonction that'll use it to populated recyclerview
+                fragment.populateOrdersListInUI(orderList)
+            }
+            //if failed,
+            .addOnFailureListener {
+                //hide progressdialog and log error
+                fragment.hideProgressDialog()
+                Log.e(fragment.javaClass.simpleName, "error while getting orders list")
+            }
+    }
     //delete address from specific user
     fun deleteAddress(activity: AddressListActivity, addressId: String){
         //we pass name of collection we want data from
