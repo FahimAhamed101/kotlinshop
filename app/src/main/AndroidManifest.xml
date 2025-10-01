@@ -20,17 +20,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyShopPal">
         <activity
-            android:name=".ui.activities.CheckoutActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:name=".ui.activities.SoldProductDetailsActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.activities.CheckoutActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ui.activities.AddEditAddressActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ui.activities.AddressListActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ui.activities.SettingsActivity"
             android:exported="false"
@@ -49,6 +52,7 @@
             android:theme="@style/Theme.MyShopPal" />
         <activity
             android:name=".ui.activities.AddProductActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:exported="false" />
         <activity
             android:name=".ui.activities.BaseActivity"

@@ -726,4 +726,40 @@ class FirestoreClass {
                 )
             }
     }
+    //get list of order of specific user
+
+
+    //get list of product sold of specific user
+    fun getSoldProductsList(fragment: SoldProductsFragment){
+        //we pass name of collection we want data from
+        mFirestore.collection(Constants.SOLD_PRODUCTS)
+            //access the document which has the field USER_ID with the corresponding user ID
+            .whereEqualTo(Constants.USER_ID,getCurrentUserID())
+            //get the fields of the doc
+            .get()
+            //if successful
+            .addOnSuccessListener { document ->
+                //create log with the list of sold product
+                Log.e("sold out list", document.documents.toString())
+                //will store the sold products in a array list
+                val soldList: ArrayList<SoldProduct> = ArrayList()
+
+                //loop through all the fields while assigning them in a proper SoldProduct object,
+                //add id of document to soldProduct, and add the soldProduct to the array list
+                for (i in document.documents) {
+                    val soldProduct = i.toObject(SoldProduct::class.java)
+                    soldProduct!!.id = i.id
+                    soldList.add(soldProduct)
+                }
+
+                //pass the arraylist to function that'll use it to populated recyclerview
+                fragment.successSoldProductsList(soldList)
+            }
+            //if failed,
+            .addOnFailureListener {
+                //hide progressdialog and log error
+                fragment.hideProgressDialog()
+                Log.e(fragment.javaClass.simpleName, "error while getting sold product list")
+            }
+    }
 }
