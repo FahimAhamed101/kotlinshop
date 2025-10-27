@@ -20,6 +20,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyShopPal">
         <activity
+            android:name=".ui.activities.MyOrdersDetailsActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.SoldProductDetailsActivity"
             android:exported="false" />
         <activity
@@ -52,8 +56,8 @@
             android:theme="@style/Theme.MyShopPal" />
         <activity
             android:name=".ui.activities.AddProductActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ui.activities.BaseActivity"
             android:exported="false" />

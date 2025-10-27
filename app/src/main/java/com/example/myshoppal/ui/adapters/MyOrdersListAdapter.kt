@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myshoppal.databinding.ItemListLayoutBinding
 import com.example.myshoppal.models.Order
+import com.example.myshoppal.ui.activities.MyOrdersDetailsActivity
 
 import com.example.myshoppal.utils.Constants
 import com.example.myshoppal.utils.GlideLoader
@@ -46,7 +47,12 @@ open class MyOrdersListAdapter(
             //make delete icon invisible
             holder.binding.ibDeleteProduct.visibility = View.GONE
 
-
+            //make items clickable, send user to MyOrderDetailsActivity with model info
+            holder.itemView.setOnClickListener {
+                val intent = Intent(context, MyOrdersDetailsActivity::class.java)
+                intent.putExtra(Constants.EXTRA_MY_ORDER_DETAILS, model)
+                context.startActivity(intent)
+            }
 
         }
 

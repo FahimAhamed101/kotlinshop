@@ -9,7 +9,8 @@
     <string name="btn_lbl_login">Login</string>
     <string name="dont_have_account">Don\'t have an account?</string>
     <string name="register"><u>Register</u></string>
-
+    <string name="lbl_selected_address">Selected Address</string>
+    <string name="lbl_cod">Cash On Delivery</string>
     <string name="create_an_acount">CREATE A ACCOUNT</string>
     <string name="hint_last_name">Last name</string>
     <string name="hint_first_name">First name</string>
